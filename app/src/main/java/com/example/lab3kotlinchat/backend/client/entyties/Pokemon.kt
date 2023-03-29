@@ -390,3 +390,8 @@ data class PokemonInfo(val pokemon:Pokemon){
         return "height: ${pokemon.height}\n weight: ${pokemon.weight}"
     }
 }
+
+data class PokemonFirebase(val document:String){
+
+    var pokemon: Pokemon? = null
+}

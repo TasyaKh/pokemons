@@ -1,6 +1,5 @@
 package com.example.lab3kotlinchat.ui.gacha
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -10,14 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.example.lab3kotlinchat.ActivityBag
+import androidx.navigation.fragment.findNavController
 import com.example.lab3kotlinchat.R
 import com.example.lab3kotlinchat.databinding.FragmentGachaBinding
 import com.example.lab3kotlinchat.ui.home.GachaViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.runBlocking
 import urlToId
+
 
 class GachaFragment : Fragment() {
 
@@ -53,53 +54,50 @@ class GachaFragment : Fragment() {
 
 //        если выпал новый покемон
         gachaViewModel.currentPokemon.observe(viewLifecycleOwner) {
-//            set name
 
-            card.pokemonName.text = it.name
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
 
-            card.hp.text = it.stats[0].base_stat.toString()
-            card.attack.text = it.stats[1].base_stat.toString()
-            card.defence.text = it.stats[2].base_stat.toString()
-            card.speed.text = it.stats[5].base_stat.toString()
+//            set pokemon in card
+                card.pokemonName.text = it.name
 
-            var ability = " "
-            for (a in it.abilities) {
-                ability += a.ability.name + " "
+                card.hp.text = it.stats[0].base_stat.toString()
+                card.attack.text = it.stats[1].base_stat.toString()
+                card.defence.text = it.stats[2].base_stat.toString()
+                card.speed.text = it.stats[5].base_stat.toString()
 
-                gachaViewModel.getAbility(urlToId(a.ability.url))
+                var ability = " "
+                for (a in it.abilities) {
+                    ability += a.ability.name + " "
 
-            }
+                    gachaViewModel.getAbility(urlToId(a.ability.url))
 
-            card.stats.text = ability
-
-            runBlocking {
-                val sprites = it.sprites
-                if (sprites.front_default != null)
-                    Picasso.get().load(sprites.front_default).into(card.imgPokemon)
-                else {
-                    card.imgPokemon.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.baseline_catching_pokemon_24
-                        )
-                    )
                 }
+
+                card.stats.text = ability
+
+                runBlocking {
+                    val sprites = it.sprites
+                    if (sprites.front_default != null)
+                        Picasso.get().load(sprites.front_default).into(card.imgPokemon)
+                    else {
+                        card.imgPokemon.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                binding.root.context,
+                                R.drawable.baseline_catching_pokemon_24
+                            )
+                        )
+                    }
+                }
+
+                gachaViewModel.saveMyPokemon(it)
             }
+
+
         }
 
 //        сумка, где можно сфоих покемонов смотерть
         binding.bag.setOnClickListener {
-//            new activity
-            val intent = Intent(binding.root.context, ActivityBag::class.java)
-//                intent.putExtra("pokemon" ,pokemon)
-
-//                intent.putExtra("pokemon_name", pokemon.name)
-//                intent.putExtra("pokemon_id", pokemon.id)
-//                intent.putExtra("pokemon_height", pokemon.height)
-//                intent.putExtra("pokemon_weight", pokemon.weight)
-
-            ContextCompat.startActivity(binding.root.context, intent, null)
-
+            findNavController().navigate(R.id.action_navigation_gacha_to_navigation_bag)
         }
 
         gachaViewModel.ability.observe(viewLifecycleOwner) {

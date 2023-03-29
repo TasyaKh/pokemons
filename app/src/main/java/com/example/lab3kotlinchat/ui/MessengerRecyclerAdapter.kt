@@ -127,7 +127,7 @@ sealed class CustomRecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolde
         }
 
 
-        fun setFavorite(db:DBConnection, id:Int){
+        private fun setFavorite(db:DBConnection, id:Int){
 
             db.getFavoritePokemon(id).addOnCompleteListener { task ->
                 var res = false

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.lab3kotlinchat.backend.client.PokemonClient
 import com.example.lab3kotlinchat.backend.client.entyties.Ability
 import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
+import com.example.lab3kotlinchat.db.DBConnection
 import com.example.lab3kotlinchat.ui.gacha.getRandomIdPokemon
 
 class GachaViewModel : ViewModel() {
@@ -37,6 +38,12 @@ class GachaViewModel : ViewModel() {
 
        val id= getRandomIdPokemon(from, to)
        pokeApi.getPokemon(id.toString(), _currentPokemon)
+    }
+
+    fun saveMyPokemon(it: Pokemon) {
+        val db = DBConnection()
+
+        db.saveMyPokemon(it)
     }
 
 }

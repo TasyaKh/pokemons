@@ -4,6 +4,7 @@ import PokemonListResponse
 import androidx.lifecycle.MutableLiveData
 import com.example.lab3kotlinchat.backend.client.entyties.Ability
 import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
+import com.example.lab3kotlinchat.backend.client.entyties.PokemonFirebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,33 +44,38 @@ class PokemonClient(
     private val service = PokeApiServiceImpl(clientConfig)
 
    override fun getPokemon(name: String, watcher: MutableLiveData<Pokemon>) = service.getPokemon(name).result(watcher)
+    fun getPokemonForFirebase(document: Pair<String,String>, watcher: MutableLiveData<PokemonFirebase>){
 
-////        println("name of pokemon  $name")
-//        val call = service.getPokemonByName(name)
-//
-//        val callback = object : Callback<Pokemon> {
-//
-//            override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
-//                println("response  $response")
-//                if (response.isSuccessful) {
-//                    val pokemon = response.body()
-//                    _pokemon.value = pokemon ?: Pokemon(
-//                        "fail to get pokemon $name ", 0, 0, 0,
-//                        Sprites(""), null
-//                    )
-//                } else {
-//                    // handle error
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
-//                _pokemon.value = Pokemon(
-//                    "fail to get pokemon $name " + t.message
-//                )
-//            }
-//        }
-//
-//        call.enqueue(callback)
+//        println("name of pokemon  $name")
+        val call = service.getPokemon(document.second)
+
+//        println("fdfvdf" + document.second)
+        val callback = object : Callback<Pokemon> {
+
+            override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
+                if (response.isSuccessful) {
+                    val pokemon = response.body()
+//                    println("getPokemonForFirebase "  + pokemon)
+
+                    if(pokemon!=null){
+                       val pF = PokemonFirebase(  document.first)
+                        pF.pokemon =  pokemon
+                        watcher.value = pF
+                    }
+
+                } else {
+                    // handle error
+                }
+            }
+
+            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+
+            }
+        }
+
+        call.enqueue(callback)
+    }
+
 
 
 
