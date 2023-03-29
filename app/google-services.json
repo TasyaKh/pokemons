@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "105768268163",
+    "firebase_url": "https://lab3kotlinchat-default-rtdb.firebaseio.com",
+    "project_id": "lab3kotlinchat",
+    "storage_bucket": "lab3kotlinchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105768268163:android:904d9f63a441c2791386b6",
+        "android_client_info": {
+          "package_name": "com.example.lab3kotlinchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105768268163-b5tsbnpehfgqn4ei954bj58ek4jaoi7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJNSUpEaF8_7zcsL9taZ9eK2Sb1hhOXEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105768268163-b5tsbnpehfgqn4ei954bj58ek4jaoi7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

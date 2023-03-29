@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        app:layout_constraintBottom_toTopOf="@+id/user_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+<!--    <ImageButton-->
+
+<!--        android:id="@+id/imageButton"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginVertical="10dp"-->
+<!--        android:background="@drawable/rectangle"-->
+<!--        android:src="@drawable/ic_dashboard_black_24dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/user_input"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--    <Spinner-->
+<!--        android:id="@+id/planets_spinner"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@android:drawable/btn_dropdown"-->
+<!--        android:spinnerMode="dialog"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/imageButton"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <EditText
+        android:id="@+id/user_input"
+        android:layout_width="0px"
+        android:paddingHorizontal="5dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:theme="@style/ThemeOverlay.Material3.TextInputEditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:hint="@string/input_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/getPokemon"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor" />
+
+    <ImageButton
+        android:id="@+id/getPokemon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/getPokemon"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_catching_pokemon_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:padding="10dp"
+        android:text="0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/pokeImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.6"
+        android:minWidth="100dp"
+        android:minHeight="90dp"
+        android:src="@drawable/baseline_catching_pokemon_24"
+        app:layout_constraintBottom_toTopOf="@+id/ability"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:fontFamily="casual"
+        android:padding="10dp"
+        android:text="name pokemon"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/number"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="casual"
+        android:padding="10dp"
+        android:text="Placeholder message"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/number"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <TextView
+        android:id="@+id/ability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/half_Black"
+        android:fontFamily="casual"
+        android:padding="10dp"
+        android:text="@string/abilities"
+
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/size" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

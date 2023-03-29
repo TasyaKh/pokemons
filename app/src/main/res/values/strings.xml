@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">lab3 kotlin chat</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="input_message">Введите покемона</string>
+    <string name="getPokemon">getPokemon</string>
+    <string name="text_messenger">messenger</string>
+    <string name="abilities">abilities</string>
+    <string name="gacha">Gacha</string>
+    <string name="go">GO</string>
+    <string name="pokemon_name">Pokemon Name</string>
+    <string name="stats">stats</string>
+    <string name="hp">hp</string>
+    <string name="attack">attack</string>
+    <string name="defence">defence</string>
+    <string name="speed">speed</string>
+
+    <string-array name="planets_array">
+            <item>id</item>
+            <item>name</item>
+        </string-array>
+</resources>
