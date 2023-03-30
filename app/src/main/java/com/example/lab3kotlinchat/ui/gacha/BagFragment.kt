@@ -1,20 +1,17 @@
 package com.example.lab3kotlinchat.ui.gacha
 
-import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.StrictMode
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
 import com.example.lab3kotlinchat.databinding.FragmentBagBinding
 import com.example.lab3kotlinchat.ui.BagMyPokemonsAdapter
-import com.example.lab3kotlinchat.ui.CustomRecyclerAdapter
 
 class BagFragment : Fragment() {
 
@@ -48,9 +45,6 @@ class BagFragment : Fragment() {
                 bagViewModel.getPokemon()
             }
         }
-
-
-//        adapter.addPokemon(Pokemon(1,"", 1,2))
 
         return root
     }

@@ -7,6 +7,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -42,14 +43,8 @@ class GachaFragment : Fragment() {
         val card = binding.cardOkemon
 
         binding.catchPokemon.setOnClickListener {
-//            val count = gachaViewModel.pokemonCount.value?.count
-//            if(  count!=null &&count > 1)
             gachaViewModel.generateRandomPokemon(1, 1009)
         }
-
-//        gachaViewModel.pokemonCount.observe(viewLifecycleOwner) {
-//            gachaViewModel.generateRandomPokemon(1, it.count)
-//        }
 
 
 //        если выпал новый покемон
@@ -100,19 +95,19 @@ class GachaFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_gacha_to_navigation_bag)
         }
 
-        gachaViewModel.ability.observe(viewLifecycleOwner) {
-//            var txt  = ""
-//            if( it.effectEntries!=null){
-//                for (ee in it.effectEntries){
-//                    txt += ee.effect + "\n"
-//                }
-//            }
-//
-//
-//            if(txt != "")
-//                 binding.stats.text = txt
-//            println("txt " + txt)
-        }
+//        gachaViewModel.ability.observe(viewLifecycleOwner) {
+////            var txt  = ""
+////            if( it.effectEntries!=null){
+////                for (ee in it.effectEntries){
+////                    txt += ee.effect + "\n"
+////                }
+////            }
+////
+////
+////            if(txt != "")
+////                 binding.stats.text = txt
+////            println("txt " + txt)
+//        }
 
         gachaViewModel.getPokemonCount()
 

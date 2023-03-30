@@ -34,5 +34,16 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // Handle the back button event and return true to override
+        // the default behavior the same way as the OnBackPressedCallback.
+        // TODO(reason: handle custom back behavior here if desired.)
+
+        // If no custom behavior was handled perform the default action.
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

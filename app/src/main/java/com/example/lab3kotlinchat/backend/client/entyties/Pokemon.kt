@@ -1,6 +1,7 @@
 package com.example.lab3kotlinchat.backend.client.entyties
 import ApiResource
 import NamedApiResource
+import android.icu.util.Calendar
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -391,7 +392,8 @@ data class PokemonInfo(val pokemon:Pokemon){
     }
 }
 
-data class PokemonFirebase(val document:String){
+data class PokemonFirebase(val document:String, val pokeId:Int,  val dateAdd:Calendar = Calendar.getInstance()){
 
     var pokemon: Pokemon? = null
+
 }

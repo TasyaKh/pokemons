@@ -31,5 +31,9 @@
         android:id="@+id/navigation_bag"
         android:name="com.example.lab3kotlinchat.ui.gacha.BagFragment"
         android:label="Bag"
-        tools:layout="@layout/fragment_bag" />
+        tools:layout="@layout/fragment_bag" >
+        <action
+            android:id="@+id/action_navigation_bag_to_navigation_gacha"
+            app:destination="@id/navigation_gacha" />
+    </fragment>
 </navigation>

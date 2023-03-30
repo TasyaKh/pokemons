@@ -11,6 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.time.Duration.Companion.milliseconds
 
 
 class DBConnection() {
@@ -68,7 +69,7 @@ class DBConnection() {
 
         val data: MutableMap<String, Any> = HashMap()
         data["id"] = pokemon.id
-        data["date_add"] = Calendar.getInstance().time;
+        data["date_add"] = Calendar.getInstance().time.time.milliseconds.inWholeMilliseconds
 
         db.collection("my_pokemon").document()[data] = SetOptions.merge()
     }

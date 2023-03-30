@@ -1,6 +1,7 @@
 package com.example.lab3kotlinchat.backend.client
 
 import PokemonListResponse
+import android.icu.util.Calendar
 import androidx.lifecycle.MutableLiveData
 import com.example.lab3kotlinchat.backend.client.entyties.Ability
 import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
@@ -44,10 +45,10 @@ class PokemonClient(
     private val service = PokeApiServiceImpl(clientConfig)
 
    override fun getPokemon(name: String, watcher: MutableLiveData<Pokemon>) = service.getPokemon(name).result(watcher)
-    fun getPokemonForFirebase(document: Pair<String,String>, watcher: MutableLiveData<PokemonFirebase>){
+    fun getPokemonForFirebase(document: PokemonFirebase, watcher: MutableLiveData<PokemonFirebase>){
 
-//        println("name of pokemon  $name")
-        val call = service.getPokemon(document.second)
+//        get pkemon by id
+        val call = service.getPokemon(document.pokeId.toString())
 
 //        println("fdfvdf" + document.second)
         val callback = object : Callback<Pokemon> {
@@ -58,7 +59,7 @@ class PokemonClient(
 //                    println("getPokemonForFirebase "  + pokemon)
 
                     if(pokemon!=null){
-                       val pF = PokemonFirebase(  document.first)
+                       val pF = PokemonFirebase(  document.document, document.pokeId, document.dateAdd )
                         pF.pokemon =  pokemon
                         watcher.value = pF
                     }

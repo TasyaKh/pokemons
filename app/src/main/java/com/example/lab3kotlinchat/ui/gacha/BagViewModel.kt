@@ -1,6 +1,7 @@
 package com.example.lab3kotlinchat.ui.gacha
 
 import android.content.ContentValues
+import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,9 +16,14 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class BagViewModel : ViewModel() {
-    val documents = ArrayList<Pair<String,String>>()
+    private val documents = ArrayList<PokemonFirebase>()
 
     private var _pokemon = MutableLiveData<Pokemon>()
     var pokemon: LiveData<Pokemon> = _pokemon
@@ -33,14 +39,29 @@ class BagViewModel : ViewModel() {
     fun getMyPokemons() {
 
 
+        //получить записи с покемонами
        val query = db.getMyPokemons()
         query.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.result) {
 
-                    val pokeId = document.data["id"].toString()
-                    documents.add(Pair(document.id, pokeId))
+//                    TODO: Convertion fanger String to int
+                    val pokeId = document.data["id"].toString().toInt()
 
+                    val cal = Calendar.getInstance()
+                    cal.timeInMillis =  document.data["date_add"].toString().toLong()
+
+                    documents.add(PokemonFirebase (document.id, pokeId,
+                        cal
+                    ))
+
+                    println("Calendar.getInstance() "  + Calendar.getInstance().time.time)
+
+
+//                    val sdf  = SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
+////                    cal.time=  sdf.parse(document.data["date_add"].toString())
+//
+//                    println("calculator time " + document.data["date_add"].toString() to Calendar)
                     Log.d(ContentValues.TAG, document.id + " => date" + document.data["date_add"])
                 }
 

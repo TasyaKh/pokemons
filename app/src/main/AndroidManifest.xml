@@ -33,8 +33,6 @@
                 android:value="" />
         </activity>
 
-        <activity android:name=".ActivityBag" />
-
     </application>
 
 </manifest>
