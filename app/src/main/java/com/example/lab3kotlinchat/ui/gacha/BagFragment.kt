@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResult
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,28 +28,46 @@ class BagFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val bagViewModel =
-            ViewModelProvider(this).get(BagViewModel::class.java)
+            ViewModelProvider(this)[BagViewModel::class.java]
 
         _binding = FragmentBagBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
 
-        val adapter = BagMyPokemonsAdapter()
         val recyclerView: RecyclerView = binding.listPokemons
-        recyclerView.adapter = adapter
+        recyclerView.adapter = bagViewModel.adapter
 
+        println("currentState  " + viewLifecycleOwner.lifecycle.currentState )
         bagViewModel.getMyPokemons()
-        bagViewModel.pokemonFirebase.observe(viewLifecycleOwner) {
-            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                println("pokeeeemon " + it.pokemon)
-                adapter.addPokemon(it)
-                bagViewModel.getPokemon()
-            }
-        }
+
+
+//        bagViewModel.pokemonFirebase.observe(viewLifecycleOwner) {
+//
+//            // println(" viewLifecycleOwner.lifecycle.currentState  " + viewLifecycleOwner.lifecycle.currentState )
+////             if (viewLifecycleOwner.lifecycle.currentState != Lifecycle.State.STARTED) {
+////                // adapter.pokemons.clear()
+////             }
+//
+//            println("lllllllll " + bagViewModel.adapter.pokemons.size)
+//
+//            bagViewModel.adapter.addPokemon(it)
+//
+//
+//            // }
+//        }
 
         return root
     }
 
+
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        val SDK_INT = Build.VERSION.SDK_INT
@@ -58,11 +77,14 @@ class BagFragment : Fragment() {
 //            StrictMode.setThreadPolicy(policy)
 //            //your codes here
 //        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
+
 
 }

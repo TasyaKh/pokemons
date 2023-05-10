@@ -97,25 +97,15 @@ sealed class CustomRecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolde
 
                     if (isChecked)
                         db.addFavoritePokemon(pokemon)
-                    else{
+                    else {
                         db.removeFavoritePokemon(pokemon.id)
                     }
                 }
             }
 
-            runBlocking {
-                val sprites = pokemon.sprites
-                if (sprites.front_default != null)
-                    Picasso.get().load(sprites.front_default).into(binding.pokeImg)
-                else {
-                    binding.pokeImg.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.baseline_catching_pokemon_24
-                        )
-                    )
-                }
-            }
+
+            loadImgPokemon(pokemon)
+
 
             binding.msgLayout.setOnClickListener {
                 pokemonInfo.seeFullInfo = !pokemonInfo.seeFullInfo
@@ -126,13 +116,28 @@ sealed class CustomRecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolde
 
         }
 
+        private fun loadImgPokemon(pokemon: Pokemon) {
+            val sprites = pokemon.sprites
+            if (sprites.front_default != null)
+                Picasso.get().load(sprites.front_default).into(binding.pokeImg)
+            else {
+                binding.pokeImg.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        binding.root.context,
+                        R.drawable.baseline_catching_pokemon_24
+                    )
+                )
+            }
+        }
 
-        private fun setFavorite(db:DBConnection, id:Int){
+
+        private fun setFavorite(db: DBConnection, id: Int) {
 
             db.getFavoritePokemon(id).addOnCompleteListener { task ->
                 var res = false
                 if (task.isSuccessful) {
                     val doc = task.result
+
                     if (doc.exists()) {
                         res = true
                     }
@@ -144,11 +149,8 @@ sealed class CustomRecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolde
             }
 
 
-
         }
     }
-
-
 
 
     fun changePokemonMsg(binding: PokemonMsgBinding, pokemonInfo: PokemonInfo) {

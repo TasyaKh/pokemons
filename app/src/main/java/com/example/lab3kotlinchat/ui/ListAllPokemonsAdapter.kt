@@ -11,13 +11,13 @@ import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
 import com.example.lab3kotlinchat.backend.client.entyties.PokemonInfo
 import com.example.lab3kotlinchat.databinding.PokemonBinding
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class ListAllPokemonsAdapter() :
     RecyclerView.Adapter<ListPokemonsHolder>() {
 
 
-    private var _controlPointEl = MutableLiveData<Pair<Int,Int>>( Pair(0,20))
+    private var _controlPointEl = MutableLiveData<Pair<Int, Int>>(Pair(0, 20))
     private var controlEndPointEl = 20
 
     fun getControlPointEl(): MutableLiveData<Pair<Int, Int>> {
@@ -56,14 +56,15 @@ class ListAllPokemonsAdapter() :
 //        val  newControlPointEl = position
 
 
-        println("position " + position +  "     controlEndPointEl" + controlEndPointEl)
+        println("position " + position + "     controlEndPointEl" + controlEndPointEl)
 
         val pos = position + 1
-        if( controlEndPointEl<=pos){
+        if (controlEndPointEl <= pos) {
             controlEndPointEl *= 2
-            _controlPointEl.value = Pair(pos+1, controlEndPointEl)
+            _controlPointEl.value = Pair(pos + 1, controlEndPointEl)
 
             println("controlPointEl " + controlEndPointEl)
+
         }
 
 
@@ -86,7 +87,7 @@ sealed class ListPokemonsHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
     class PokemonViewHolder(private val binding: PokemonBinding) :
         ListPokemonsHolder(binding) {
 
-        private lateinit var pokemonInfo:PokemonInfo
+        private lateinit var pokemonInfo: PokemonInfo
 
         fun bind(pokemon: Pokemon) {
             pokemonInfo = PokemonInfo(pokemon)
@@ -96,23 +97,31 @@ sealed class ListPokemonsHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
 
             binding.size.text = pokemonInfo.size()
             binding.name.text = pokemon.name
+
             binding.number.text = pokemon.id.toString()
             binding.ability.text = abilities
 
-            runBlocking {
-                val sprites = pokemon.sprites
-                if (sprites.front_default != null)
-                    Picasso.get().load(sprites.front_default).into(binding.pokeImg)
-                else {
-                    binding.pokeImg.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.baseline_catching_pokemon_24
-                        )
-                    )
-                }
-            }
+
+            loadImgPokemon(pokemon)
+
         }
+
+        private fun loadImgPokemon(pokemon: Pokemon) {
+
+            val sprites = pokemon.sprites
+            if (sprites.front_default != null)
+                Picasso.get().load(sprites.front_default).into(binding.pokeImg)
+            else {
+                binding.pokeImg.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        binding.root.context,
+                        R.drawable.baseline_catching_pokemon_24
+                    )
+                )
+            }
+
+        }
+
     }
 }
 

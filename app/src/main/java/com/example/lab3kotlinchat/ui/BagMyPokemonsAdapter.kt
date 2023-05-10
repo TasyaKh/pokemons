@@ -1,6 +1,6 @@
 package com.example.lab3kotlinchat.ui
 
-import android.text.format.DateFormat
+import   android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,13 +8,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.lab3kotlinchat.R
+import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
 import com.example.lab3kotlinchat.backend.client.entyties.PokemonFirebase
 import com.example.lab3kotlinchat.databinding.ListItemMyPokemonBinding
 import com.example.lab3kotlinchat.db.DBConnection
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.runBlocking
 
-class BagMyPokemonsAdapter() :
+class BagMyPokemonsAdapter(var pokemons: ArrayList<PokemonFirebase> = ArrayList<PokemonFirebase>()) :
     RecyclerView.Adapter<ListMyPokemonsHolder>() {
 
 
@@ -26,23 +27,22 @@ class BagMyPokemonsAdapter() :
     }
 
     // хранит покемонов и сообщения юзера
-    var pokemons = ArrayList<PokemonFirebase>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
+   fun clearAll(){
+        pokemons.clear()
+        notifyDataSetChanged()
+    }
     fun addPokemon(p: PokemonFirebase) {
+        println("size array " + pokemons.size)
         pokemons.add(p)
-        notifyItemChanged(pokemons.size)
-//        pokemons.sortBy { pk -> pk.id }
-//        notifyDataSetChanged()
+        notifyItemChanged(pokemons.size-1)
     }
 
-    fun removePokemon(index:Int){
+    fun removePokemon(index: Int) {
         pokemons.removeAt(index)
         notifyItemRemoved(index)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListMyPokemonsHolder {
 
         return when (viewType) {
@@ -89,7 +89,10 @@ class BagMyPokemonsAdapter() :
 
 sealed class ListMyPokemonsHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class MyPokemonViewHolder(private val binding: ListItemMyPokemonBinding,val adapter:BagMyPokemonsAdapter) :
+    class MyPokemonViewHolder(
+        private val binding: ListItemMyPokemonBinding,
+        val adapter: BagMyPokemonsAdapter
+    ) :
         ListMyPokemonsHolder(binding) {
 
 //        private lateinit var pokemonInfo: PokemonInfo
@@ -114,21 +117,9 @@ sealed class ListMyPokemonsHolder(binding: ViewBinding) : RecyclerView.ViewHolde
                 card.stats.text = abilities
 
 
-                binding.dateAdd.text =DateFormat.format("dd-MM-yyy", pokemonFR.dateAdd.time)
+                binding.dateAdd.text = DateFormat.format("dd-MM-yyy", pokemonFR.dateAdd.time)
 
-                runBlocking {
-                    val sprites = pokemon.sprites
-                    if (sprites.front_default != null)
-                        Picasso.get().load(sprites.front_default).into(card.imgPokemon)
-                    else {
-                        card.imgPokemon.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                binding.root.context,
-                                R.drawable.baseline_catching_pokemon_24
-                            )
-                        )
-                    }
-                }
+                loadImgPokemon(pokemon)
             }
 
             binding.delete.setOnClickListener {
@@ -138,6 +129,21 @@ sealed class ListMyPokemonsHolder(binding: ViewBinding) : RecyclerView.ViewHolde
                 adapter.removePokemon(layoutPosition)
             }
         }
+
+        private fun loadImgPokemon(pokemon: Pokemon) {
+            val sprites = pokemon.sprites
+            if (sprites.front_default != null)
+                Picasso.get().load(sprites.front_default).into(binding.cardOkemon.imgPokemon)
+            else {
+                binding.cardOkemon.imgPokemon.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        binding.root.context,
+                        R.drawable.baseline_catching_pokemon_24
+                    )
+                )
+            }
+        }
+
     }
 }
 

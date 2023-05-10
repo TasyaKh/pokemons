@@ -24,8 +24,8 @@ class DBConnection() {
     }
 
 
-//    add pokemon
-
+    //    add pokemon
+    //добавить покемона в избарнное
     fun addFavoritePokemon(pokemon: Pokemon) {
 
         val data: MutableMap<String, Any> = HashMap()
@@ -34,14 +34,14 @@ class DBConnection() {
         db.collection("favorite_pokemon").document(pokemon.id.toString())[data] = SetOptions.merge()
     }
 
-
+    //получить покемона из избранного
     fun getFavoritePokemon(id: Int): Task<DocumentSnapshot> {
 
         val docRef = db.collection("favorite_pokemon").document(id.toString())
         return docRef.get()
     }
 
-    //remove pokemon
+    //remove pokemon из избранного
     fun removeFavoritePokemon(id: Int) {
 
         val pokemonRef = db.collection("favorite_pokemon")
@@ -57,15 +57,8 @@ class DBConnection() {
             }
     }
 
+    //сохранить моего покемона
     fun saveMyPokemon(pokemon: Pokemon) {
-
-//        val favoritePokemon: HashMap<String, Any> = pokemonToHashMap(pokemon)
-
-
-//        val map = Json.encodeToJsonElement(pokemon).jsonObject.toMap()
-//
-//        val docRef = db.collection("my_pokemon").document(pokemon.id.toString())
-//        docRef.set(mapOf("user" to map))
 
         val data: MutableMap<String, Any> = HashMap()
         data["id"] = pokemon.id
@@ -74,14 +67,15 @@ class DBConnection() {
         db.collection("my_pokemon").document()[data] = SetOptions.merge()
     }
 
+    // получить всех покемонов пользователя
     fun getMyPokemons(): Task<QuerySnapshot> {
 
         val docRef = db.collection("my_pokemon").get()
-           
+
         return docRef
     }
 
-    //TODO: HERE
+    //удалить моего покемона
     fun removeMyPokemon(document: String) {
 
         val pokemonRef = db.collection("my_pokemon")

@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab3kotlinchat.backend.client.entyties.Pokemon
 import com.example.lab3kotlinchat.databinding.FragmentHomeBinding
 import com.example.lab3kotlinchat.ui.ListAllPokemonsAdapter
 
@@ -29,7 +31,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -41,23 +43,21 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
-        homeViewModel.pokemon.observe(viewLifecycleOwner) {
-            adapter.addPokemon(it)
+       homeViewModel.pokemon.observe(viewLifecycleOwner) {
+            //adapter.pokemons.clear()
+
+             adapter.addPokemon(it)
         }
 
-        homeViewModel.pokemonCount.observe(viewLifecycleOwner) {
-//            println(" rlkmkvmokdmfv " + it.count)
-            homeViewModel.getPokemons(it.count)
-        }
+
+
+
+        homeViewModel.pokemonCount
 
         adapter.getControlPointEl().observe(viewLifecycleOwner) {
 //            println(" rlkmkvmokdmfv " + it.count)
             homeViewModel.getPokemons(it.first, it.second)
         }
-
-
-        println(" helllooooooo ")
-        homeViewModel.getPokemonCount()
 
         return root
     }
@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
             //your codes here
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
